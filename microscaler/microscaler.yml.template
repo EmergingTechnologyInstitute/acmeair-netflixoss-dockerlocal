@@ -23,7 +23,7 @@ database:
   asg_password: $asguser_passwd
 
 authorization:
-  token_expiration: 7200 
+  token_expiration: 7200
 
 load_balancer:
   image_id: xxx-xxx-xxx-xxx
@@ -38,21 +38,16 @@ health_manager:
   register_subject: "*.register"
   unregister_subject: "*.unregister"
   updater_interval: 10  # time between updaters invocations (in s)
-  reconciler_interval: 6 # time between reconciler invocation (in s)
-  max_age_stale: 20 # time for an instance to be considered stale and pruned (in s)
+  reconciler_interval: 20 # time between reconciler invocation (in s)
+  max_age_stale: 15 # time for an instance to be considered stale and pruned (in s)
   max_age_from_launch: 60 # this should be the max time an instance would take to start (in s)
 
 instance_manager:
   stalled:  60 # time for an instance that was started or stopped to be considered stalled
-  lease_duration: 10 # duration of the lease for IM to dequeue and start launching or stopping instances  
-
-autoscaler:
-  url: http://localhost:9080/autoscaler
-  default_space: dev
-  authorization_token: 5d1930a6-3f80-436e-b074-cd38602c27d0    
+  lease_duration: 10 # duration of the lease for IM to dequeue and start launching or stopping instances
 
 docker:
-  daemon_url: http://172.17.42.1:4243 
+  daemon_url: http://172.17.42.1:4243
   container_dns: 172.17.42.1
   container_dns_search: [auth-service-liberty.local.flyacmeair.net,
                          webapp-liberty.local.flyacmeair.net,
@@ -61,6 +56,11 @@ docker:
                          eureka.local.flyacmeair.net,
                          zuul.local.flyacmeair.net]
 
+autoscaler:
+  url: http://localhost:9080/autoscaler
+  default_space: dev
+  authorization_token: 5d1930a6-3f80-436e-b074-cd38602c27d0
+
 # there is no real auth service at this point, for the time being we define users here
 auth:
   user01: key
@@ -68,28 +68,75 @@ auth:
 
 # instance types
 instance_types:
-  m1.micro:
+  t1.micro:
     vcpu: 1
-    memory: 512 
-    disk: 10
+    memory: 512
 
   m1.small:
     vcpu:  1
     memory: 1024
-    disk: 40
 
   m1.medium:
     vcpu:  1
     memory: 2048
-    disk: 80
 
   m1.large:
     vcpu:  2
     memory: 4096
-    disk: 160
 
   m1.xlarge:
     vcpu:  4
     memory: 8196
-    disk: 160
+
+  m2.xlarge:
+    vcpu:  4
+    memory: 8196
+
+  m2.2xlarge:
+    vcpu:  8
+    memory: 16392
+
+  m2.4xlarge:
+    vcpu:  16
+    memory: 32784
+
+  m3.xlarge:
+    vcpu:  4
+    memory: 8196
+
+  m3.2xlarge:
+    vcpu:  8
+    memory: 16392
+
+  c1.medium:
+    vcpu: 2
+    memory: 1536
+
+  c1.xlarge:
+    vcpu:  8
+    memory: 7168
+
+  cc1.4xlarge:
+    vcpu:  8
+    memory: 20480
+
+  cc2.8xlarge:
+    vcpu:  16
+    memory: 40960
+
+  cg1.4xlarge:
+    vcpu:  8
+    memory: 20480
+
+  cr1.8xlarge:
+    vcpu:  16
+    memory: 40960
+
+  hi1.4xlarge:
+    vcpu:  8
+    memory: 20480
+
+  hs1.8xlarge:
+    vcpu:  16
+    memory: 40960
 
