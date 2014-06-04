@@ -1,0 +1,8 @@
+base/id_rsa.pub
+bin/id_rsa
+bin/id_rsa.pub
+bin/license-prompt.accepted
+microscaler/Dockerfile
+microscaler/microscaler.yml
+tomcat/tomcat-users.xml
+

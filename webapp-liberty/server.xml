@@ -1,0 +1,11 @@
+<server>
+    <featureManager>
+        <feature>jsp-2.2</feature>
+        <feature>servlet-3.0</feature>
+    </featureManager>
+    <httpEndpoint id="defaultHttpEndpoint" httpPort="80" httpsPort="443" host="*" />
+    <webApplication id="webapp" name="webapp" type="war" context-root="/" location="webapp.war"/>
+    <classloading useJarUrls="true"/>
+    <webContainer deferServletLoad="false"/>
+</server>
+

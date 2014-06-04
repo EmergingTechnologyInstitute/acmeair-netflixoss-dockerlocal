@@ -1,0 +1,25 @@
+grails {
+        awsAccounts=['111111111111']
+        awsAccountNames=['111111111111':'dev']
+}
+secret {
+        accessId='AAAAAAAAAAAAAAAAAAAA'
+        secretKey='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+}
+secretRightScale {
+        email='a@a.com'
+        password='password'
+        cloudId='1111'
+        accountId='11111'
+        deploymentId='111111111'
+        serverTemplateId='111111111'
+        multiCloudImageRestHref='/api/multi_cloud_images/111111111'
+}
+secretCloudantAppDatabase {
+        username = "aaaaaaa"
+        password = "aaaaaaa"
+}
+cloud {
+        accountName='dev'
+        publicResourceAccounts=[]
+}

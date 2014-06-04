@@ -1,0 +1,7 @@
+<server>
+    <featureManager>
+        <feature>jsp-2.2</feature>
+    </featureManager>
+    <httpEndpoint id="defaultHttpEndpoint" httpPort="9080" httpsPort="9443" host="*"/>
+</server>
+

@@ -1,0 +1,9 @@
+---
+agent:
+  poller_interval: 10
+  nats: nats://microscaler.microscaler.local.flyacmeair.net:4222
+  nats_subject: router.register
+
+docker:
+  daemon_url: http://172.17.42.1:4243
+

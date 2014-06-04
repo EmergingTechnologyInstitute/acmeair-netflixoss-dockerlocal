@@ -1,0 +1,95 @@
+---
+driver: docker # can be one of 'docker' (other containers may be supported adding new drivers)
+
+controller:
+  port: 56785
+  ssl: false
+
+database:
+  ip-address: localhost
+  port: 27017
+  pool_size: 5
+  pool_timeout: 5
+  admin_user:  admin
+  admin_password: $admin_passwd
+  auth_db:  authdb
+  auth_user:  auser
+  auth_password: $auser_passwd
+  im_db: imdb
+  im_user: imuser
+  im_password: $imuser_passwd
+  asg_db:  asgdb
+  asg_user:  asguser
+  asg_password: $asguser_passwd
+
+authorization:
+  token_expiration: 7200 
+
+load_balancer:
+  image_id: xxx-xxx-xxx-xxx
+  hourly_billing: true
+  domain: 50.22.42.13.xip.io
+  nats_subject: router.register
+
+instances:
+  hourly_billing: true
+
+health_manager:
+  register_subject: "*.register"
+  unregister_subject: "*.unregister"
+  updater_interval: 10  # time between updaters invocations (in s)
+  reconciler_interval: 6 # time between reconciler invocation (in s)
+  max_age_stale: 20 # time for an instance to be considered stale and pruned (in s)
+  max_age_from_launch: 60 # this should be the max time an instance would take to start (in s)
+
+instance_manager:
+  stalled:  60 # time for an instance that was started or stopped to be considered stalled
+  lease_duration: 10 # duration of the lease for IM to dequeue and start launching or stopping instances  
+
+autoscaler:
+  url: http://localhost:9080/autoscaler
+  default_space: dev
+  authorization_token: 5d1930a6-3f80-436e-b074-cd38602c27d0    
+
+docker:
+  daemon_url: http://172.17.42.1:4243 
+  container_dns: 172.17.42.1
+  container_dns_search: [auth-service-liberty.local.flyacmeair.net,
+                         webapp-liberty.local.flyacmeair.net,
+                         auth-service.local.flyacmeair.net,
+                         webapp.local.flyacmeair.net,
+                         eureka.local.flyacmeair.net,
+                         zuul.local.flyacmeair.net]
+
+# there is no real auth service at this point, for the time being we define users here
+auth:
+  user01: key
+  user02: key
+
+# instance types
+instance_types:
+  m1.micro:
+    vcpu: 1
+    memory: 512 
+    disk: 10
+
+  m1.small:
+    vcpu:  1
+    memory: 1024
+    disk: 40
+
+  m1.medium:
+    vcpu:  1
+    memory: 2048
+    disk: 80
+
+  m1.large:
+    vcpu:  2
+    memory: 4096
+    disk: 160
+
+  m1.xlarge:
+    vcpu:  4
+    memory: 8196
+    disk: 160
+

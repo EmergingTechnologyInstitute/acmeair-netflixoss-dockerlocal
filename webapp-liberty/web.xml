@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>acmeair-webapp</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<!-- Configure ContextLoaderListener to use AnnotationConfigWebApplicationContext
+		instead of the default XmlWebApplicationContext -->
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+		</param-value>
+	</context-param>
+
+	<!-- Configuration locations must consist of one or more comma- or space-delimited
+		fully-qualified @Configuration classes. Fully-qualified packages may also
+		be specified for component-scanning -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>com.acmeair.web.config.CassandraAstyanaxConfig</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>CookieFilter</filter-name>
+		<filter-class>com.acmeair.web.RESTCookieSessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CookieFilter</filter-name>
+		<url-pattern>/rest/api/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Bootstrap the root application context as usual using ContextLoaderListener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<display-name>HystrixMetricsStreamServlet</display-name>
+		<servlet-name>HystrixMetricsStreamServlet</servlet-name>
+		<servlet-class>com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HystrixMetricsStreamServlet</servlet-name>
+		<url-pattern>/hystrix.stream</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>jersey-servlet</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>com.acmeair.web</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>jersey-servlet</servlet-name>
+		<url-pattern>/rest/api/*</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>com.netflix.karyon.server.guice.KaryonGuiceContextListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

@@ -1,0 +1,11 @@
+<server>
+    <featureManager>
+        <feature>jsp-2.2</feature>
+        <feature>servlet-3.0</feature>
+    </featureManager>
+    <httpEndpoint id="defaultHttpEndpoint" httpPort="80" httpsPort="443" host="*" />
+    <webApplication id="auth-service" name="auth-service" type="war" context-root="/" location="auth-service.war"/>
+    <classloading useJarUrls="true"/>
+    <webContainer deferServletLoad="false"/>
+</server>
+
