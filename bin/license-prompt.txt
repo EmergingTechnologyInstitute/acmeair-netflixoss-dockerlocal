@@ -7,11 +7,11 @@ Please review and agree to the license located at the following address
 before proceeding.
 
 Short URL -
-	http://git.io/3W-1Lw
+	http://bit.ly/aa-noss-dl-licenses
 
 Long URL (combine lines) -
 	https://github.com/EmergingTechnologyInstitute/
-	csf-acmeair-netflixoss-dockerlocal/wiki/Licenses
+	acmeair-netflixoss-dockerlocal/wiki/Licenses
 
 ******************************************************************************
 
