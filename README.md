@@ -1,6 +1,6 @@
 Acmeair-netflix-docker
 ======================
-These instructions are based on Docker 0.11.1, and the Ubuntu trusty on VirtualBox. If you use boot2docker, persistent disks are required.
+These instructions are based on Docker 0.11.1, and the Ubuntu trusty on VirtualBox. If you use boot2docker, persistent disks are required. [(Japanese)](README_ja.md)
 
 ## The topology
 
