@@ -26,7 +26,7 @@ RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf &\
   /usr/bin/mongo imdb --eval "db.addUser('imuser','$imuser_passwd');" &&\
   /usr/bin/mongo asgdb --eval "db.addUser('asguser','$asguser_passwd');" &&\
   sleep 5 &&\
-  pkill mongod &&\
+  sudo -u mongodb pkill mongod &&\
   sleep 5
 RUN gem install mongo bson_ext
 RUN sed -i 's/\(bind_ip = \).*/\10.0.0.0/' /etc/mongodb.conf &&\

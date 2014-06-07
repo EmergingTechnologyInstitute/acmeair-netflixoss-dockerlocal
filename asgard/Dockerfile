@@ -22,7 +22,7 @@ ADD applications.js /tmp/applications.js
 RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --fork &&\
   sleep 5 &&\
   /usr/bin/mongo localhost/applications < /tmp/applications.js &&\
-  /usr/bin/mongod -f /etc/mongodb.conf --shutdown &&\
+  sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --shutdown &&\
   rm /tmp/applications.js
 
 RUN cd /opt/tomcat/webapps &&\
