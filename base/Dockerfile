@@ -23,7 +23,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     ruby1.9.3 \
     supervisor \
     wget &&\
-  apt-get clean
+  apt-get clean &&\
+  rm -Rf /var/cache/*
 
 # SSH
 RUN mkdir -p /var/run/sshd
@@ -41,7 +42,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80/ --recv 7B2C3B0889BF57
 
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install oracle-java7-installer oracle-java7-set-default &&\
-  apt-get clean
+  apt-get clean &&\
+  rm -Rf /var/cache/*
 
 EXPOSE 22
 

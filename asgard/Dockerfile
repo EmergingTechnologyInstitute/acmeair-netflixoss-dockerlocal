@@ -16,7 +16,8 @@
 FROM acmeair/tomcat
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y mongodb &&\
-  apt-get clean
+  apt-get clean &&\
+  rm -Rf /var/cache/*
 
 ADD applications.js /tmp/applications.js
 RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --fork &&\
