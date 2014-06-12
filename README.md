@@ -1,6 +1,6 @@
 Acmeair-netflix-docker
 ======================
-These instructions are based on Docker 0.11.1, and the Ubuntu trusty on VirtualBox. If you use boot2docker, persistent disks are required. [(Japanese)](README_ja.md)
+These instructions are based on Docker 1.0.0 run on Ubuntu trusty boot2docker. [(Japanese)](README_ja.md)
 
 ## The topology
 
@@ -8,12 +8,12 @@ These instructions are based on Docker 0.11.1, and the Ubuntu trusty on VirtualB
 
 ## Configurations
 ### Enable remote API access of Docker daemon via TCP socket
-Change Docker daemon startup configuration (`/etc/default/docker`) like as bellow.
+Change Docker daemon startup configuration (`/etc/default/docker`) like as bellow. On boot2docker, it is enabled by default.
 
 ```bash
 # Use DOCKER_OPTS to modify the daemon startup options.
 #DOCKER_OPTS="-dns 8.8.8.8 -dns 8.8.4.4"
-DOCKER_OPTS="-H tcp://0.0.0.0:4243 -H unix://var/run/docker.sock"
+DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock"
 ```
 
 ### Docker client command
@@ -142,22 +142,21 @@ Make sure your docker version. The version might be different from the assumptio
 
 ```bash
 $ docker version
-Client version: 0.11.1
-Client API version: 1.11
+Client version: 1.0.0
+Client API version: 1.12
 Go version (client): go1.2.1
-Git commit (client): fb99f99
-Server version: 0.11.1
-Server API version: 1.11
-Git commit (server): fb99f99
+Git commit (client): 63fe64c
+Server version: 1.0.0
+Server API version: 1.12
 Go version (server): go1.2.1
-Last stable version: 0.11.1
+Git commit (server): 63fe64c
 ```
 
 TCP socket might not be enabled. Check options of Docker daemon.
 
 ```bash
 $ ps -ef | grep docker
-root     22320     1  0 14:06 ?        00:01:00 /usr/bin/docker -d -H tcp://0.0.0.0:4243 -H unix://var/run/docker.sock
+root     22320     1  0 14:06 ?        00:01:00 /usr/bin/docker -d -H tcp://0.0.0.0:2735 -H unix://var/run/docker.sock
 ```
 
 Your firewall might block the communications between the containers and the Docker daemon. Please check your firewall rules.

@@ -1,3 +1,5 @@
+import com.netflix.asgard.Region
+
 grails {
         awsAccounts=['111111111111']
         awsAccountNames=['111111111111':'dev']
@@ -23,3 +25,7 @@ cloud {
         accountName='dev'
         publicResourceAccounts=[]
 }
+
+eureka { regionsToServers = [ (Region.DOCKER_LOCAL_1): "$EUREKA_ADDR" ] }
+docker { local { restBase = "$DOCKER_URL_BASE" } }
+

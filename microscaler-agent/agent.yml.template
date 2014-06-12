@@ -5,5 +5,5 @@ agent:
   nats_subject: router.register
 
 docker:
-  daemon_url: http://172.17.42.1:4243
+  daemon_url: $DOCKER_URL_BASE
 

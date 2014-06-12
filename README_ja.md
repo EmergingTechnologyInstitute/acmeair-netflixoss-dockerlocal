@@ -1,6 +1,6 @@
 Acmeair-netflix-docker
 ======================
-この説明はDocker 0.11.1、Ubuntu trustyのVirtualBoxの仮想マシンを元にしています。boot2dockerを使う場合は永続ディスクが必要です。
+この説明はUbuntu trustyとboot2docker上で動くDocker 1.0.0前提にしています。
 
 ## 構成
 
@@ -8,12 +8,12 @@ Acmeair-netflix-docker
 
 ## 設定
 ### Dockerデーモンのremote API用TCP接続を有効にする
-Dockerデーモンの起動用の設定 (`/etc/default/docker`) を以下のように変更します。
+Dockerデーモンの起動用の設定 (`/etc/default/docker`) を以下のように変更します。boot2dockerではデフォルトで有効になっています。
 
 ```bash
 # Use DOCKER_OPTS to modify the daemon startup options.
 #DOCKER_OPTS="-dns 8.8.8.8 -dns 8.8.4.4"
-DOCKER_OPTS="-H tcp://0.0.0.0:4243 -H unix://var/run/docker.sock"
+DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock"
 ```
 
 ### Dockerクライアントのコマンド
@@ -142,22 +142,21 @@ Dockerのバージョンを確認します。この説明の前提と違うこ�
 
 ```bash
 $ docker version
-Client version: 0.11.1
-Client API version: 1.11
+Client version: 1.0.0
+Client API version: 1.12
 Go version (client): go1.2.1
-Git commit (client): fb99f99
-Server version: 0.11.1
-Server API version: 1.11
-Git commit (server): fb99f99
+Git commit (client): 63fe64c
+Server version: 1.0.0
+Server API version: 1.12
 Go version (server): go1.2.1
-Last stable version: 0.11.1
+Git commit (server): 63fe64c
 ```
 
 DockerデーモンのTCPソケットが有効でないかもしれません。Dockerデーモンの設定を確認して下さい。
 
 ```bash
 $ ps -ef | grep docker
-root     22320     1  0 14:06 ?        00:01:00 /usr/bin/docker -d -H tcp://0.0.0.0:4243 -H unix://var/run/docker.sock
+root     22320     1  0 14:06 ?        00:01:00 /usr/bin/docker -d -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock
 ```
 
 ファイアーウォールがコンテナとDockerデーモンの通信を止めているかもしれません。ファイアーウォールの設定を確認して下さい。

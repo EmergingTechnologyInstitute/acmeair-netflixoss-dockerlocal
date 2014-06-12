@@ -47,8 +47,8 @@ instance_manager:
   lease_duration: 10 # duration of the lease for IM to dequeue and start launching or stopping instances
 
 docker:
-  daemon_url: http://172.17.42.1:4243
-  container_dns: 172.17.42.1
+  daemon_url: $DOCKER_URL_BASE
+  container_dns: $DNS_ADDR
   container_dns_search: [auth-service-liberty.local.flyacmeair.net,
                          webapp-liberty.local.flyacmeair.net,
                          auth-service.local.flyacmeair.net,

@@ -28,7 +28,6 @@ RUN cd /usr/local &&\
   chmod a+x lib/docker_agent.rb &&\
   chmod a+x lib/rest_client.rb
 
-ADD agent.yml /usr/local/microscaler-agent/conf/agent.yml
 ADD microscaler-agent.conf /etc/supervisor/conf.d/microscaler-agent.conf
 
 CMD ["/usr/bin/supervisord", "-n"]

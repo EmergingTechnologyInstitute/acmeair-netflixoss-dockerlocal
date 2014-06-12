@@ -20,6 +20,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y mongodb 
   rm -Rf /var/cache/*
 
 ADD applications.js /tmp/applications.js
+RUN echo "smallfiles = true" >> /etc/mongodb.conf
 RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --fork &&\
   sleep 5 &&\
   /usr/bin/mongo localhost/applications < /tmp/applications.js &&\
@@ -33,7 +34,6 @@ RUN cd /opt/tomcat/webapps &&\
   jar xf app.war &&\
   rm app.war
 
-ADD Config.groovy /root/.asgard/Config.groovy
 ADD mongodb.conf /etc/supervisor/conf.d/mongodb.conf
 
 ENV CATALINA_OPTS -XX:MaxPermSize=128m

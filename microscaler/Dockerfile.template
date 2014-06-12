@@ -19,7 +19,17 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y mongodb 
   apt-get clean &&\
   rm -Rf /var/cache/*
 
+# gnatsd
+RUN mkdir /tmp/go &&\
+  GOPATH=/tmp/go go get github.com/apcera/gnatsd &&\
+  mv /tmp/go/bin/gnatsd /usr/local/bin &&\
+  rm -Rf /tmp/go
+
 # MongoDB
+RUN gem install mongo bson_ext
+RUN sed -i 's/\(bind_ip = \).*/\10.0.0.0/' /etc/mongodb.conf &&\
+  echo "port = 27017" >> /etc/mongodb.conf &&\
+  echo "smallfiles = true" >> /etc/mongodb.conf
 RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf &\
   sleep 5 &&\
   /usr/bin/mongo admin --eval "db.addUser('admin','$admin_passwd');" &&\
@@ -29,17 +39,7 @@ RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf &\
   sleep 5 &&\
   sudo -u mongodb pkill mongod &&\
   sleep 5
-RUN gem install mongo bson_ext
-RUN sed -i 's/\(bind_ip = \).*/\10.0.0.0/' /etc/mongodb.conf &&\
-  echo "port = 27017" >> /etc/mongodb.conf &&\
-  echo "auth = true" >> /etc/mongodb.conf &&\
-  echo "smallfiles = true" >> /etc/mongodb.conf
-
-# gnatsd
-RUN mkdir /tmp/go &&\
-  GOPATH=/tmp/go go get github.com/apcera/gnatsd &&\
-  mv /tmp/go/bin/gnatsd /usr/local/bin &&\
-  rm -Rf /tmp/go
+RUN echo "auth = true" >> /etc/mongodb.conf
 
 # Microscaler
 RUN cd /usr/local &&\
@@ -55,8 +55,6 @@ RUN cd /usr/local &&\
   bundle install &&\
   cd ../microscaler-cli &&\
   bundle install 
-
-ADD microscaler.yml /usr/local/microscaler/conf/microscaler.yml
 
 ADD redis.conf /etc/supervisor/conf.d/redis.conf
 ADD mongodb.conf /etc/supervisor/conf.d/mongodb.conf
