@@ -56,6 +56,8 @@ RUN cd /usr/local &&\
   cd ../microscaler-cli &&\
   bundle install 
 
+RUN echo "alias ms=/usr/local/microscaler-cli/bin/ms" >> /root/.bashrc
+
 ADD redis.conf /etc/supervisor/conf.d/redis.conf
 ADD mongodb.conf /etc/supervisor/conf.d/mongodb.conf
 ADD gnatsd.conf /etc/supervisor/conf.d/gnatsd.conf
