@@ -30,15 +30,13 @@ RUN gem install mongo bson_ext
 RUN sed -i 's/\(bind_ip = \).*/\10.0.0.0/' /etc/mongodb.conf &&\
   echo "port = 27017" >> /etc/mongodb.conf &&\
   echo "smallfiles = true" >> /etc/mongodb.conf
-RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf &\
-  sleep 5 &&\
+RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --fork &\
+  max=5; for i in `seq 1 1 $max`; do sleep 5; /usr/bin/mongo --eval "db"; if [ "$?" -eq 0 ]; then break; fi; if [ "$i" -eq "$max" ]; then exit 1; fi; done &&\
   /usr/bin/mongo admin --eval "db.addUser('admin','$admin_passwd');" &&\
   /usr/bin/mongo authdb --eval "db.addUser('auser','$auser_passwd');" &&\
   /usr/bin/mongo imdb --eval "db.addUser('imuser','$imuser_passwd');" &&\
   /usr/bin/mongo asgdb --eval "db.addUser('asguser','$asguser_passwd');" &&\
-  sleep 5 &&\
-  sudo -u mongodb pkill mongod &&\
-  sleep 5
+  sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --shutdown
 RUN echo "auth = true" >> /etc/mongodb.conf
 
 # Microscaler

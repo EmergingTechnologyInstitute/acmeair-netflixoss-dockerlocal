@@ -22,7 +22,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y mongodb 
 ADD applications.js /tmp/applications.js
 RUN echo "smallfiles = true" >> /etc/mongodb.conf
 RUN sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --fork &&\
-  sleep 5 &&\
+  max=5; for i in `seq 1 1 $max`; do sleep 5; /usr/bin/mongo --eval "db"; if [ "$?" -eq 0 ]; then break; fi; if [ "$i" -eq "$max" ]; then exit 1; fi; done &&\
   /usr/bin/mongo localhost/applications < /tmp/applications.js &&\
   sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf --shutdown &&\
   rm /tmp/applications.js
