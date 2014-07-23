@@ -9,7 +9,7 @@ sed -i 's/$EUREKA_ADDR/'$eureka_addr'/' ../asgard/Config.groovy
 sed -i 's/$DOCKER_URL_BASE/'$(echo ${docker_url_base} | sed 's/\/\//\\\/\\\//')'/' ../asgard/Config.groovy
 
 $docker_cmd run \
--d -t \
+-d -t -P \
 --dns "$dns" \
 $dns_search \
 -v `pwd`/../asgard/Config.groovy:/root/.asgard/Config.groovy \
