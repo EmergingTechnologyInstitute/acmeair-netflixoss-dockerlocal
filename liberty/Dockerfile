@@ -8,7 +8,5 @@ RUN cd /tmp &&\
 ADD server.xml /opt/ibm/wlp/usr/servers/defaultServer/
 ADD liberty.conf /etc/supervisor/conf.d/liberty.conf
 
-EXPOSE 9080 9443
-
 CMD ["/usr/bin/supervisord", "-n"]
 

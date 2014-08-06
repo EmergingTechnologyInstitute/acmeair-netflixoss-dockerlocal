@@ -28,5 +28,7 @@ ADD config.properties /opt/ibm/wlp/usr/servers/defaultServer/apps/webapp.war/WEB
 ADD server.xml /opt/ibm/wlp/usr/servers/defaultServer/server.xml
 ADD jvm.options /opt/ibm/wlp/usr/servers/defaultServer/jvm.options
 
+EXPOSE 80
+
 CMD ["/usr/bin/supervisord", "-n"]
 
