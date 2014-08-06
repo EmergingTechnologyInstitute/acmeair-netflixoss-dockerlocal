@@ -15,7 +15,9 @@
 ################################################################################
 FROM ubuntu:14.04
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install pwgen
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install pwgen &&\
+  apt-get clean &&\
+  rm -Rf /var/cache/*
 
 ENTRYPOINT ["pwgen"]
 
